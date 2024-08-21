@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,14 +26,24 @@ SECRET_KEY = 'django-insecure-24(y#nwggo9wz4jt&&24k)kyo$9#_6*jel)4ih5u1xi(#0!w9w
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 APPS = [
-    'appteste'
+    'appteste',
+    'rest_framework',
+    'django_filters'
 ]
+
+REST_FRAMEWORK = {
+ "DEFAULT_FILTER_BACKENDS" : ("django_filters.rest_framework.DjangoFilterBackend",),
+ "DEFAULT_SCHEMA_CLASS" : "rest_framework.schemas.coreapi.AutoSchema" ,
+ "DEFAULT_PAGINATION_CLASS" : "rest_framework.pagination.PageNumberPagination",
+ "NON_FIELD_ERRORS_KEY" : "error",
+ "PAGE_SIZE" : 5
+}
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -72,6 +83,9 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'setup.wsgi.application'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 
 # Database
