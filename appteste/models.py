@@ -3,13 +3,6 @@ from django.utils import timezone
 
 # Create your models here.
 
-
-class Pixels(models.Model):
-    nickname = models.CharField(max_length=200)
-    nome = models.CharField(max_length=200, blank=True, null=True)
-    comentario = models.TextField()
-    upload = models.FileField(upload_to='pixels/', null=True, blank=True)
-
 class BaseModelQuerySet(models.QuerySet):
     def delete(self):
         self.update(deleted_at=timezone.now(), is_active=False);
@@ -36,3 +29,10 @@ class BaseModel(models.Model):
 
     def hard_delete(self, **kwargs):
         super(BaseModel, self).delete(**kwargs)
+
+class Pixels(BaseModel):
+    nickname = models.CharField(max_length=200)
+    nome = models.CharField(max_length=200, blank=True, null=True)
+    comentario = models.TextField()
+    upload = models.FileField(upload_to='pixels/', null=True, blank=True)
+
